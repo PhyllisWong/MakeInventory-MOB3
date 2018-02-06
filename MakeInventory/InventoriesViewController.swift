@@ -13,6 +13,8 @@ class InventoriesViewController: UIViewController {
     let stack = CoreDataStack.instance
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dateTextLebel: UILabel!
+    
     var inventories = [Inventory]()
     
     override func viewDidLoad() {
@@ -49,13 +51,37 @@ extension InventoriesViewController: UITableViewDataSource {
 
 extension InventoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath) as! InventoryCell
         
-        let item = inventories[indexPath.row]
-        
-        cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "x\(item.quantity)"
+        let item = indexPath.item
+        cell.inventory = inventories[item]
+        print(item)
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedItem = inventories[indexPath.row]
+        let date = selectedItem.date
+        let productName = selectedItem.name
+        let quantity = selectedItem.quantity
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
+        
+        detailVC.productName = productName
+        detailVC.quantity = quantity
+        detailVC.date = date
+        
+        self.navigationController?.pushViewController(detailVC, animated: true)
+        
+    }
 }
+
+
+
+
+
+

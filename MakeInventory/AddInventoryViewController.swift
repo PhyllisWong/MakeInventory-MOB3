@@ -13,6 +13,8 @@ class AddInventoryViewController: UIViewController {
     
     @IBOutlet weak var inventoryNameField: UITextField!
     @IBOutlet weak var inventoryQuantityField: UITextField!
+ 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +23,17 @@ class AddInventoryViewController: UIViewController {
     @IBAction func savePressed(_ sender: Any) {
         guard let name = inventoryNameField.text, let quantity = Int64(inventoryQuantityField.text!) else {return}
         
+        // set the date property
+        // update the tableView
+        let date = Date()
+        
         let inv = Inventory(
             context: coreDataStack.privateContext
         )
         
         inv.name = name
         inv.quantity = quantity
+        inv.date = date
         
         coreDataStack.saveTo(context: coreDataStack.privateContext)
         
