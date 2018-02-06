@@ -56,40 +56,19 @@ extension InventoriesViewController: UITableViewDataSource {
 extension InventoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath) as! InventoryCell
-        
         let item = indexPath.item
         cell.inventory = inventories[item]
-        // print("Inventory item: \(item)")
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedItem = inventories[indexPath.row]
-        let date = selectedItem.date
-        let productName = selectedItem.name
-        let quantity = selectedItem.quantity
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        
-        print("Formatted date: \(dateFormatter.string(from: date!))")
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
         let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
-        
-        detailVC.productName = productName
-        detailVC.quantity = quantity
-        detailVC.date = date
-        
-        // programatic segue
-        //self.navigationController?.pushViewController(detailVC, animated: true)
-        
-        // storyboard segue
-        self.performSegue(withIdentifier: "showDetailSegue", sender: self)
+        detailVC.inventory = selectedItem
+
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
     // Delete an item from the inventory by swiping left
