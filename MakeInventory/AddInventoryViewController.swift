@@ -30,6 +30,13 @@ class AddInventoryViewController: UIViewController {
         // update the tableView
         let date = Date()
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        
+        print("Formatted date: \(dateFormatter.string(from: date))")
+        
+        
         let inv = Inventory(
             context: coreDataStack.privateContext
         )

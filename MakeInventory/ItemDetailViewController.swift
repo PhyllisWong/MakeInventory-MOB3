@@ -21,6 +21,11 @@ class ItemDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.itemTextField.text = "some shit"
+        self.quantityTextField.text = "some other shit"
+        self.dateLabel.text = "some date"
+        
     }
 
     @IBAction func saveButtonPressed(_ sender: Any) {

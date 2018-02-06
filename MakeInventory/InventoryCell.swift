@@ -23,10 +23,24 @@ class InventoryCell: UITableViewCell {
     var inventory: Inventory? {
         
         didSet {
+            var displayDate : String {
+                let formatter = DateFormatter()
+                formatter.timeStyle = .none
+                formatter.dateStyle = .short
+                return formatter.string(from: Date())
+            }
+            
             titleInvLabel.text = inventory?.name
             quantityInvLabel.text = inventory?.quantity.description
-            dateInvLabel.text = inventory?.date?.description
+            dateInvLabel.text = displayDate
         }
+    }
+    
+    func convertDateToDisplay(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .short
+        return formatter.string(from: Date())
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
