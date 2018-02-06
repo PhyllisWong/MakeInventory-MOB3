@@ -10,30 +10,26 @@ import UIKit
 
 class ItemDetailViewController: UIViewController {
     
+    @IBOutlet weak var itemTextField: UITextField!
+    @IBOutlet weak var quantityTextField: UITextField!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    
     var productName: String?
     var quantity: Int64?
     var date: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        
+        print("some stuff happens")
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

@@ -87,22 +87,23 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="G26-8O-8Ed" id="r4G-rh-pAq"/>
+                        <segue destination="CbD-dG-bk5" kind="show" identifier="showDetailSegue" id="SaQ-hR-OzD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="372" y="33.733133433283363"/>
         </scene>
-        <!--View Controller-->
+        <!--Item Detail-->
         <scene sceneID="xCF-lM-ZG4">
             <objects>
-                <viewController id="CbD-dG-bk5" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ItemDetailViewController" storyboardIdentifier="ItemDetailViewController" title="Item Detail" id="CbD-dG-bk5" customClass="ItemDetailViewController" customModule="MakeInventory" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0ZX-Rf-CU0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="mP1-Kp-Tp3">
-                                <rect key="frame" x="12" y="95" width="351" height="122.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="mP1-Kp-Tp3">
+                                <rect key="frame" x="12" y="134" width="351" height="150.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-Dr-6Vq">
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="30"/>
@@ -125,7 +126,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="lbk-O9-gDR">
-                                        <rect key="frame" x="0.0" y="51" width="351" height="30"/>
+                                        <rect key="frame" x="0.0" y="65" width="351" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBQ-ih-Tcq">
                                                 <rect key="frame" x="0.0" y="0.0" width="65" height="30"/>
@@ -145,7 +146,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="wFx-n6-UPJ">
-                                        <rect key="frame" x="0.0" y="102" width="351" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="130" width="351" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlW-Dh-Cbk">
                                                 <rect key="frame" x="0.0" y="0.0" width="36" height="20.5"/>
@@ -168,10 +169,22 @@
                         <constraints>
                             <constraint firstItem="Sz6-Z0-Jqj" firstAttribute="trailing" secondItem="mP1-Kp-Tp3" secondAttribute="trailing" constant="12" id="In2-c5-qLH"/>
                             <constraint firstItem="mP1-Kp-Tp3" firstAttribute="leading" secondItem="Sz6-Z0-Jqj" secondAttribute="leading" constant="12" id="R7X-VL-eQF"/>
-                            <constraint firstItem="mP1-Kp-Tp3" firstAttribute="top" secondItem="Sz6-Z0-Jqj" secondAttribute="top" constant="75" id="faH-76-BC4"/>
+                            <constraint firstItem="mP1-Kp-Tp3" firstAttribute="top" secondItem="Sz6-Z0-Jqj" secondAttribute="top" constant="70" id="faH-76-BC4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sz6-Z0-Jqj"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="bc3-to-CXN">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="n4G-XL-gap">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="CbD-dG-bk5" id="8uF-yb-y0H"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dateLabel" destination="LsV-Qg-lrW" id="6g7-IJ-NJK"/>
+                        <outlet property="itemTextField" destination="u48-S6-n54" id="g6t-7l-rD2"/>
+                        <outlet property="quantityTextField" destination="mGC-i8-V2G" id="qYG-AJ-haM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8A-4x-1XY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

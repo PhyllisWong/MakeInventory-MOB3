@@ -18,6 +18,9 @@ class AddInventoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.inventoryNameField.text = "add inventory item"
+        self.inventoryQuantityField.text = "add total"
     }
     
     @IBAction func savePressed(_ sender: Any) {

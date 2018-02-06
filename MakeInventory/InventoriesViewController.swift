@@ -13,12 +13,16 @@ class InventoriesViewController: UIViewController {
     let stack = CoreDataStack.instance
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var dateTextLebel: UILabel!
     
     var inventories = [Inventory]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set the row height for the tableView large enough to display all the data
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 50
+        
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -55,7 +59,7 @@ extension InventoriesViewController: UITableViewDelegate {
         
         let item = indexPath.item
         cell.inventory = inventories[item]
-        print(item)
+        // print("Inventory item: \(item)")
         
         return cell
     }
@@ -67,6 +71,12 @@ extension InventoriesViewController: UITableViewDelegate {
         let productName = selectedItem.name
         let quantity = selectedItem.quantity
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        
+        print("Formatted date: \(dateFormatter.string(from: date!))")
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
@@ -75,9 +85,34 @@ extension InventoriesViewController: UITableViewDelegate {
         detailVC.quantity = quantity
         detailVC.date = date
         
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        // programatic segue
+        //self.navigationController?.pushViewController(detailVC, animated: true)
+        
+        // storyboard segue
+        self.performSegue(withIdentifier: "showDetailSegue", sender: self)
+    }
+    
+    // Delete an item from the inventory by swiping left
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            // delete the row from the data source
+            let deleteItem = inventories[indexPath.row]
+            // item to delete
+            print(deleteItem)
+            
+            // delete data from the inventories array
+            self.inventories.remove(at: indexPath.row)
+            
+            // delete the row from the tableview
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // delete request from the data store
+            
+        }
         
     }
+    
 }
 
 
