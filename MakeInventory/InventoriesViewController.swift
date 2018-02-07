@@ -19,6 +19,9 @@ class InventoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Inventory"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        
         // set the row height for the tableView large enough to display all the data
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = 50
@@ -66,6 +69,7 @@ extension InventoriesViewController: UITableViewDelegate {
         let selectedItem = inventories[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
+        
         detailVC.inventory = selectedItem
 
         self.navigationController?.pushViewController(detailVC, animated: true)

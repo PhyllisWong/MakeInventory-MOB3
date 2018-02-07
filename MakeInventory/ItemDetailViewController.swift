@@ -22,6 +22,8 @@ class ItemDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Item Detail"
+        
         let productName = inventory?.name
         let quantity = inventory?.quantity.description
         // let date = inventory?.date?.description
