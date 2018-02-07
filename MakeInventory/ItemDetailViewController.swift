@@ -9,6 +9,7 @@
 import UIKit
 
 class ItemDetailViewController: UIViewController {
+    let coreDataStack = CoreDataStack.instance
     
     // outlets
     @IBOutlet weak var itemTextField: UITextField!
@@ -43,6 +44,17 @@ class ItemDetailViewController: UIViewController {
     }
 
     @IBAction func saveButtonPressed(_ sender: Any) {
+        
+        guard let name = itemTextField.text, let quantity = Int64(quantityTextField.text!) else {return}
+        
+        let inv = Inventory(
+            context: coreDataStack.privateContext
+        )
+        
+        inv.name = name
+        inv.quantity = quantity
+        
+        coreDataStack.saveTo(context: coreDataStack.privateContext)
         
         print("some stuff happens")
         self.navigationController?.popViewController(animated: true)

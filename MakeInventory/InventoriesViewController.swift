@@ -91,7 +91,24 @@ extension InventoriesViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
             
             // delete request from the data store
+            /* Deleting a record from a persistent store involves three steps:
             
+            fetch the record that needs to be deleted
+            mark the record for deletion
+                save the changes
+             */
+            
+            let fetch = NSFetchRequest<Inventory>(entityName: "Inventory")
+            do {
+                let record = try stack.privateContext.fetch(fetch) as? NSManagedObjectContext
+                
+                stack.saveTo(context: stack.privateContext)
+                print("managedObject")
+                
+            }
+            catch let error {
+                print("Error: \(error)")
+            }
         }
         
     }
