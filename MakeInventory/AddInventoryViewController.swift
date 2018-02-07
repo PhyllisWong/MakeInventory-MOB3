@@ -19,8 +19,8 @@ class AddInventoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.inventoryNameField.text = "add inventory item"
-        self.inventoryQuantityField.text = "add total"
+//        self.inventoryNameField.text = "add inventory item"
+//        self.inventoryQuantityField.text = "add total"
     }
     
     @IBAction func savePressed(_ sender: Any) {
@@ -30,20 +30,18 @@ class AddInventoryViewController: UIViewController {
         // update the tableView
         let date = Date()
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        
-        print("Formatted date: \(dateFormatter.string(from: date))")
-        
         
         let inv = Inventory(
             context: coreDataStack.privateContext
         )
         
+        print("Date: \(date)\n")
+        
         inv.name = name
         inv.quantity = quantity
         inv.date = date
+        
+        print("inv.Date: \(inv.date)\n")
         
         coreDataStack.saveTo(context: coreDataStack.privateContext)
         

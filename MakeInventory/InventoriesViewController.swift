@@ -76,41 +76,35 @@ extension InventoriesViewController: UITableViewDelegate {
     }
     
     // Delete an item from the inventory by swiping left
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        if editingStyle == .delete {
-            // delete the row from the data source
-            let deleteItem = inventories[indexPath.row]
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexpath) in
+            print("Delete Action Tapped")
+            let deleteItem = self.inventories[indexPath.row]
             // item to delete
             print(deleteItem)
-            
             // delete data from the inventories array
             self.inventories.remove(at: indexPath.row)
             
             // delete the row from the tableview
             tableView.deleteRows(at: [indexPath], with: .fade)
             
-            // delete request from the data store
-            /* Deleting a record from a persistent store involves three steps:
-            
-            fetch the record that needs to be deleted
-            mark the record for deletion
-                save the changes
-             */
-            
-            let fetch = NSFetchRequest<Inventory>(entityName: "Inventory")
-            do {
-                let record = try stack.privateContext.fetch(fetch) as? NSManagedObjectContext
-                
-                stack.saveTo(context: stack.privateContext)
-                print("managedObject")
-                
-            }
-            catch let error {
-                print("Error: \(error)")
-            }
+            self.stack.viewContext.delete(deleteItem)
+            try! self.stack.viewContext.save()
         }
         
+        deleteAction.backgroundColor = .red
+        
+        
+        let editAction = UITableViewRowAction(style: .destructive, title: "Edit") { (action, indexpath) in
+            print("edit action tapped")
+            let editItem = self.inventories[indexPath.row]
+            print(editItem)
+            
+        }
+        editAction.backgroundColor = .blue
+        return [deleteAction, editAction]
     }
     
 }
