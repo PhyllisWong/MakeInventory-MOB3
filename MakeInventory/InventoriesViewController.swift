@@ -34,15 +34,6 @@ class InventoriesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.updateInventories()
-//        let fetch = NSFetchRequest<Inventory>(entityName: "Inventory")
-//        do {
-//            let result = try stack.viewContext.fetch(fetch)
-//            self.inventories = result
-//            self.tableView.reloadData()
-//
-//        }catch let error {
-//            print(error)
-//        }
     }
     
     func updateInventories() {
@@ -79,17 +70,11 @@ extension InventoriesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let selectedItem = inventories[indexPath.row]
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
-//
-//        detailVC.inventory = selectedItem
-//
-//        self.navigationController?.pushViewController(detailVC, animated: true)
-        print("Did select row at")
+        // self.navigationController?.pushViewController(detailVC, animated: true)
+        // print("Did select row at")
     }
     
-    // Delete an item from the inventory by swiping left
+    // Swipe left actions: edit and delete
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -129,30 +114,39 @@ extension InventoriesViewController: UITableViewDelegate {
                 let okAction = UIAlertAction(title: "Save", style: .default) { (_) in
                     
                     //getting the input values from user
-                    let newName = alertController.textFields?[0].text
-                    var newQuantity: Int64?
-                    if alertController.textFields?[1] != nil {
-                        newQuantity = Int64((alertController.textFields?[1].text)!)
+                    let newName: String?
+                    let newQuantity: Int64?
+                    
+                    // Validate the input field for product name
+                    if let _name = alertController.textFields![0].text, !_name.isEmpty {
+                        newName = _name
+                        print("new name assigned")
                     } else {
-                        newQuantity = editItem.quantity
+                        newName = editItem.name
+                        print("name not changed")
                     }
                     
                     
-                            
-                        
-                  
-                    
-                        self.inventories[indexPath.row].quantity = newQuantity!
-                    
-                    
-                    self.inventories[indexPath.row].name = newName
-                    
+                    // Validate the input field for quantity
+                    if let _count = alertController.textFields![1].text, !_count.isEmpty {
+                        newQuantity = Int64(_count)
+                        print("new count assigned")
+                    } else {
+                        newQuantity = editItem.quantity
+                        print("count not changed")
+                    }
                    
+                    
+                    // set the new values to the data store
+                    self.inventories[indexPath.row].name = newName
+                    self.inventories[indexPath.row].quantity = newQuantity!
+                   
+                    // save to the stack
                     self.stack.saveTo(context: self.stack.privateContext)
+                    // update the view controller
                     self.updateInventories()
                 }
                 
-                // alertController.addAction(okAction)
                 
                 //the cancel action doing nothing
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
@@ -180,30 +174,6 @@ extension InventoriesViewController: UITableViewDelegate {
         editAction.backgroundColor = .blue
         return [deleteAction, editAction]
     }
-    
-    func fetchInventoryandUpdate() {
-        // grab the data store, and update with the new values
-    }
-    
-//    func dismissAlert(sender: UIAlertAction) -> Void {
-//
-//        // edit the item in the data store
-//
-//        guard let name = itemTextField.text, let quantity = Int64(quantityTextField.text!) else {return}
-//
-//        let inv = Inventory(
-//            context: stack.privateContext
-//        )
-//
-//        inv.name = name
-//        inv.quantity = quantity
-//
-//        stack.saveTo(context: stack.privateContext)
-//
-//        print("some stuff happens")
-//
-//        // print("you edited that crap")
-//    }
     
 }
 

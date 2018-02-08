@@ -41,7 +41,7 @@ class AddInventoryViewController: UIViewController {
         inv.quantity = quantity
         inv.date = date
         
-        print("inv.Date: \(inv.date)\n")
+        print("inv.Date: \(String(describing: inv.date))\n")
         
         coreDataStack.saveTo(context: coreDataStack.privateContext)
         
