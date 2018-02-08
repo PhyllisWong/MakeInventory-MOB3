@@ -33,6 +33,19 @@ class InventoriesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.updateInventories()
+//        let fetch = NSFetchRequest<Inventory>(entityName: "Inventory")
+//        do {
+//            let result = try stack.viewContext.fetch(fetch)
+//            self.inventories = result
+//            self.tableView.reloadData()
+//
+//        }catch let error {
+//            print(error)
+//        }
+    }
+    
+    func updateInventories() {
         let fetch = NSFetchRequest<Inventory>(entityName: "Inventory")
         do {
             let result = try stack.viewContext.fetch(fetch)
@@ -66,13 +79,14 @@ extension InventoriesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedItem = inventories[indexPath.row]
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
-        
-        detailVC.inventory = selectedItem
-
-        self.navigationController?.pushViewController(detailVC, animated: true)
+//        let selectedItem = inventories[indexPath.row]
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let detailVC = storyboard.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
+//
+//        detailVC.inventory = selectedItem
+//
+//        self.navigationController?.pushViewController(detailVC, animated: true)
+        print("Did select row at")
     }
     
     // Delete an item from the inventory by swiping left
@@ -102,10 +116,94 @@ extension InventoriesViewController: UITableViewDelegate {
             let editItem = self.inventories[indexPath.row]
             print(editItem)
             
+            
+            
+            // MARK: Alert View Controller
+            func showAlertWith(title: String, message: String, style: UIAlertControllerStyle = .alert) {
+                
+                //Creating UIAlertController and
+                //Setting title and message for the alert dialog
+                
+                let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+                
+                let okAction = UIAlertAction(title: "Save", style: .default) { (_) in
+                    
+                    //getting the input values from user
+                    let newName = alertController.textFields?[0].text
+                    var newQuantity: Int64?
+                    if alertController.textFields?[1] != nil {
+                        newQuantity = Int64((alertController.textFields?[1].text)!)
+                    } else {
+                        newQuantity = editItem.quantity
+                    }
+                    
+                    
+                            
+                        
+                  
+                    
+                        self.inventories[indexPath.row].quantity = newQuantity!
+                    
+                    
+                    self.inventories[indexPath.row].name = newName
+                    
+                   
+                    self.stack.saveTo(context: self.stack.privateContext)
+                    self.updateInventories()
+                }
+                
+                // alertController.addAction(okAction)
+                
+                //the cancel action doing nothing
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+                
+                //adding textfields to our dialog box
+                alertController.addTextField { (textField) in
+                    textField.placeholder = "Enter New Name"
+                }
+                alertController.addTextField { (textField) in
+                    textField.placeholder = "Change Quantity"
+                }
+                
+                //adding the action to dialogbox
+                alertController.addAction(okAction)
+                alertController.addAction(cancelAction)
+                
+                //finally presenting the dialog box
+                self.present(alertController, animated: true, completion: nil)
+            }
+            
+            let message = "enter new values"
+            showAlertWith(title: "Edit item", message: message, style: .alert)
+            
         }
         editAction.backgroundColor = .blue
         return [deleteAction, editAction]
     }
+    
+    func fetchInventoryandUpdate() {
+        // grab the data store, and update with the new values
+    }
+    
+//    func dismissAlert(sender: UIAlertAction) -> Void {
+//
+//        // edit the item in the data store
+//
+//        guard let name = itemTextField.text, let quantity = Int64(quantityTextField.text!) else {return}
+//
+//        let inv = Inventory(
+//            context: stack.privateContext
+//        )
+//
+//        inv.name = name
+//        inv.quantity = quantity
+//
+//        stack.saveTo(context: stack.privateContext)
+//
+//        print("some stuff happens")
+//
+//        // print("you edited that crap")
+//    }
     
 }
 
