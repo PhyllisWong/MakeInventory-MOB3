@@ -27,7 +27,6 @@ class ItemDetailViewController: UIViewController {
         
         let productName = inventory?.name
         let quantity = inventory?.quantity.description
-        // let date = inventory?.date?.description
         
         var displayDate : String {
             let formatter = DateFormatter()
@@ -60,7 +59,4 @@ class ItemDetailViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
         
     }
-    
-    
-
 }

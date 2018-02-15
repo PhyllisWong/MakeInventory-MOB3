@@ -14,13 +14,9 @@ class AddInventoryViewController: UIViewController {
     @IBOutlet weak var inventoryNameField: UITextField!
     @IBOutlet weak var inventoryQuantityField: UITextField!
  
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.inventoryNameField.text = "add inventory item"
-//        self.inventoryQuantityField.text = "add total"
     }
     
     @IBAction func savePressed(_ sender: Any) {
@@ -35,13 +31,10 @@ class AddInventoryViewController: UIViewController {
             context: coreDataStack.privateContext
         )
         
-        print("Date: \(date)\n")
-        
+        // Update the data store with the values entered by the user
         inv.name = name
         inv.quantity = quantity
         inv.date = date
-        
-        print("inv.Date: \(String(describing: inv.date))\n")
         
         coreDataStack.saveTo(context: coreDataStack.privateContext)
         

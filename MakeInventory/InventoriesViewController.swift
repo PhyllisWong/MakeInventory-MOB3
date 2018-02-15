@@ -16,6 +16,7 @@ class InventoriesViewController: UIViewController {
     
     var inventories = [Inventory]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +33,6 @@ class InventoriesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.updateInventories()
     }
     
@@ -69,13 +69,10 @@ extension InventoriesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // self.navigationController?.pushViewController(detailVC, animated: true)
-        // print("Did select row at")
+        // Curently only highlights so the user knows they tapped it
     }
     
     // Swipe left actions: edit and delete
-
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexpath) in
